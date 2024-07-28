@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <form class="form">
+        <h3>Enter Login Credentials</h3>
+        <input id="emailid" placeholder="Enter Email" type="text">
+        <input id="pass" placeholder="Enter Password" type="password">
+        <button id="btn" type="submit">Submit</button>
+    </form>
+
+    <script>
+        let baseURL = `http://localhost:3000/admin`;
+        let form = document.querySelector(".form");
+        let isLogged = JSON.parse(localStorage.getItem("logged")) || false;
+        
+        let fetchData = async (url) => {
+            try {
+                let response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                alert("Failed to fetch data. Please try again later.");
+            }
+        };
+
+        let handleBtn = async (event) => {
+            event.preventDefault();
+            let users = await fetchData(baseURL);
+            if (!users) return; // Exit if fetch failed
+
+            let email = event.target[0].value;
+            let password = event.target[1].value;
+
+            let userExists = users.find(user => user.email === email);
+            if (userExists) {
+                if (userExists.password === password) {
+                    isLogged = true;
+                    localStorage.setItem("logged", JSON.stringify(userExists));
+                    alert("Login Successful");
+                    window.location.href = `../pages/admin.html?userId=${userExists.id}`;
+                } else {
+                    alert("Invalid Credentials");
+                }
+            } else {
+                alert("User does not exist! Please Sign up");
+                window.location.href = "./signup.html";
+            }
+        };
+
+        form.addEventListener("submit", handleBtn);
+
+        // Prompt after 2 seconds
+        setTimeout(() => {
+            let ans = prompt(`Already have an account? "Yes" or "No"`);
+            if (ans && (ans.toLowerCase() === "no" || ans.toLowerCase() === "n")) {
+                window.location.href = "./signup.html";
+            }
+        }, 2000); // Set a timeout of 2000 milliseconds (2 seconds)
+
+
+        // // Remove from localStorage function
+        // let removeFromLocalStorage = () => {
+        //     localStorage.removeItem("logged");
+        //     alert("Logged out successfully.");
+        //     // Redirect or perform other actions after logging out
+        //     window.location.href = "./login.html"; // Example redirect to login page
+        // };
+
+
+        // removeFromLocalStorage
+        // Example usage: Call removeFromLocalStorage() where you want to log out the user
+        // For instance, you can add a logout button somewhere in your UI and call this function onClick
+
+    </script>
+
+</body>
+
+</html>

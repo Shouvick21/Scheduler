@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #ADD8E6;
+        }
+        main{
+            margin: auto;
+            max-width: 1480px;
+        }
+        #container{
+            width: 70%;
+            margin: 90px auto;
+            display: flex;
+            /* border: 1px solid; */
+            gap: 20px;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: white;
+            font-family: sans-serif;
+        }
+        #leftside{
+            width: 70%;
+            height: 500px;
+            /* border: 1px solid; */
+
+        }
+        #leftside>img{
+            width: 100%;
+            height: 120%;
+        }
+        #rightside{
+            width: 30%;
+            border-left: 1px solid;
+            display: flex;
+            align-items: center;
+        }
+
+
+
+        #signup{
+            /* border: 1px solid green; */
+            padding: 0px 10px;
+        }
+        #signup>h2{
+            margin-bottom: 7px;
+            font-size: 30px;
+        }
+        #signup>p{
+            font-size: 16px;
+        }
+       
+        
+        #normalform>input{
+            width: 100%;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+
+            border: 1px solid rgb(169, 167, 167);
+            
+        }
+        #normalform>input:focus{
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
+            border: none;
+            outline: rgba(0, 123, 255, 0.8);
+        }
+        #login_btn{
+            width: 100%;
+            height: 40px;
+            font-size: 20px;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
+            background-color: #4353f0;
+            cursor: pointer;
+        }
+        #login_btn:active{
+            background-color:#00246B ;
+        }
+        @media(width<=1224px){
+            #container{
+                width: 80%;
+            }
+        }
+        @media(width<=1024px){
+            #container{
+                width: 90%;
+            }
+        }
+        @media(width<=780px){
+            #container{
+                width: 50%;
+                flex-direction: column;
+            }
+            #leftside{
+                width: 100%;
+                height: auto;
+
+            }#leftside>img{
+            
+            height: auto;
+        }
+            #rightside{
+                width: 100%;
+                border: 0px;
+                border-top:1px solid ;
+                padding-top: 30px;
+            }
+        }
+        @media(width<=600px){
+            #container{
+                width: 60%;
+                flex-direction: column;
+            }
+        }
+        @media(width<=500px){
+            #container{
+                width: 70%;
+                flex-direction: column;
+            }
+        }
+        @media(width<=400px){
+            #container{
+                width: 80%;
+                flex-direction: column;
+            }
+        }
+
+        
+    </style>
+</head>
+<body>
+    <main>
+        <div id="container">
+            <div id="leftside">
+                <img src="../image/Calendly-Availability-In-A-Click.webp" alt="">
+    
+    
+            </div>
+            <div id="rightside">
+                <div id="signup">
+                    <h2>Get Started Now</h2>
+                    <p>Enter your credintial  to access your account</p>
+                    
+                    <br>
+                    <hr><br>
+                    <div id="normalform">
+                            <label for="email">Email Address:</label>
+                            <input type="email" id="email" placeholder="Email Address" >
+                            <label for="password">Password:</label>
+                            <input type="text" id="password" placeholder="Password" >
+                        <button id="login_btn"> Log in</button>
+                        <p style="color: red;" id="message"> </p>
+                    </div>
+                    <p>Don't have an account? <a href="signup.html" style="color: #4353f0; font-size: 18px;"> Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    
+</body>
+
+<script>
+    let login_btn=document.querySelector("#login_btn")
+    let email_input=document.querySelector("#email")
+    let password_input=document.querySelector("#password")
+    let message=document.querySelector("#message")
+    
+    
+    const loginvalidation = ()=>{
+        
+
+       let email = email_input.value
+       let userpass = password_input.value
+    
+    //   fetch("http://localhost:3000/users")
+        fetch("https://mock-api-server-ls06.onrender.com/users")
+      .then((res)=>res.json())
+      .then((res)=>{
+          let narr = res.filter((ele)=>{
+              return ele.useremail == email && ele.userpass == userpass
+          })
+          let onlyemail_match=res.filter((ele)=>{
+              return ele.useremail == email && ele.userpass != userpass
+          })
+
+          
+          if(onlyemail_match.length==1){
+            message.innerHTML="wrong password ."
+          }
+          else if(narr.length == 0){
+            message.innerHTML="Please register first ."
+          }
+          else{
+            
+            localStorage.setItem("isLogged" , JSON.stringify(narr))
+            window.location.href = "user.html"
+          }
+      })
+    }
+
+    login_btn.addEventListener("click",loginvalidation)
+
+    
+
+
+
+
+
+</script>
+
+</html>

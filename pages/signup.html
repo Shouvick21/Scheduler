@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #c8c8d0;
+            
+        }
+        #container{
+            width: 80%;
+            height: auto;
+            margin: 100px auto;
+            font-family: sans-serif;
+            
+            background-color: white;
+            /* border: 1px solid ; */
+            display: flex;
+            border-radius: 20px;
+            
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            
+        }
+        #leftcontainer{
+            margin-right: 20px;
+            width: 40%;
+            padding: 30px;
+        }
+        #signup{
+            /* border: 1px solid green; */
+            padding: 0px 10px;
+        }
+        #signup>h2{
+            margin-bottom: 7px;
+        }
+       
+        
+        #normalform>input{
+            width: 100%;
+            height: 40px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border: 1px solid rgb(169, 167, 167);
+            
+        }
+        #normalform>input:focus{
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
+            border: none;
+            outline: rgba(0, 123, 255, 0.8);
+        }
+        
+        #checkbox{
+            display: flex;
+            margin-bottom: 15px;
+            
+        }
+        #submit_btn{
+            width: 100%;
+            height: 40px;
+            font-size: 20px;
+            color: white;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 15px;
+            background-color: #4353f0;
+            cursor: pointer;
+        }
+        #submit_btn:active{
+            background-color:#00246B ;
+        }
+        
+
+
+
+        #rightcontainer{
+            /* border: 1px solid red; */
+            padding: 10px;
+            width: 60%;
+        }
+        
+        #gif{
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+           
+        }
+        @media (width<=1200px){
+            #container{
+                width: 90%;
+                margin: 80px auto;
+            }
+            
+            #signuppubyother>div{
+                font-size: 12px;
+                
+            }
+        }
+        @media(width<=760px){
+            #container{
+                flex-direction: column-reverse;
+                width: 80%;
+                margin: 60px auto;
+                align-items: center;
+            }
+            #leftcontainer{
+                width: 80%;
+            }
+            #rightcontainer{
+                width: 100%;
+            }
+        }
+        @media(width<=480px){
+            #leftcontainer{
+                width: 100%;
+                margin-right: 0px;
+            }
+            
+        }
+       
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="leftcontainer">
+            <div id="signup">
+                <h2>Get Started Now</h2>
+                <p>Enter your credintial  to access your account</p>
+                
+                <br>
+                <hr><br>
+                <div id="normalform">
+                    
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" placeholder="Name" >
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" placeholder="Email Address">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" placeholder="Password">
+                        
+                    
+                    <div id="checkbox">
+                        <input type="checkbox" id="checkboxinput" value="checkedvalue">
+                        <p>I agree to the <a href="" style="color: #4353f0;">Terms & privecy</a></p>
+                    </div>
+                    <button id="submit_btn"> Sign up</button>
+                    <p style="color: red;" id="message"></p>
+                </div>
+                <p>Have an account? <a href="login.html" style="color: #4353f0;"> Log in</a></p>
+
+
+
+            </div>
+
+        </div>
+        <div id="rightcontainer">
+            <img src="../image/zbs-booking-page-nw-ezgif.com-webp-to-gif-converter.gif" alt="" id="gif">
+
+        </div>
+    </div>
+
+<!-- <form>
+
+    <input id="username" placeholder="username" >
+    <input id="userEmail" placeholder="email" type="email" >
+    <input id="userPass" placeholder="password" >
+    <input type="submit">
+</form> -->
+    
+</body>
+
+<script>
+    let name_input=document.querySelector("#name")
+    let email_input=document.querySelector("#email")
+    let password_input=document.querySelector("#password")
+    let checkbox_input=document.querySelector("#checkboxinput")
+    let message=document.querySelector("#message")
+    let submit_btn=document.querySelector("#submit_btn")
+
+    // const formsubmit=()=>{
+        
+    //     if(checkbox_input.checked){
+    //         message.innerHTML=""
+    //         console.log("yes")
+    //     }
+    //     else{
+    //         message.innerHTML="Please accept T&c"
+    //     }
+    // }
+
+    // 
+
+
+    
+    const formsubmit = ()=>{
+        if(checkbox_input.checked){
+    
+      }
+  
+    let username=name_input.value
+    let useremail=email_input.value
+    let userpass=password_input.value
+   
+    
+       let obj = {
+           id : Math.random().toString(),
+           username , 
+           useremail,
+           userpass ,
+           meetingDetails: []
+       }
+
+       fetch(`https://mock-api-server-ls06.onrender.com/users`)
+       .then((res)=>res.json())
+       .then((res)=>{
+        let narr = res.filter((ele)=>{
+            return ele.username == username
+        })
+
+        if(narr.length == 0 ){
+            fetch(`https://mock-api-server-ls06.onrender.com/users` , {
+                method : "POST" , 
+                headers : {
+                    "Content-type" : "application/json"
+                },
+                body : JSON.stringify(obj)
+            }).then((res)=>{
+                window.location.href = "login.html"
+            })
+        }else{
+            alert("username already exists !!")
+        }
+       })
+
+     
+
+    }
+
+
+    submit_btn.addEventListener("click",formsubmit)
+    
+
+</script>
+</html>

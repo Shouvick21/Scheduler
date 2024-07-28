@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            
+        }
+        header{
+            padding: 0px 20px;
+            width: 100%;
+            height: 100px;
+            background-color: rgb(7, 74, 207);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            position: fixed;
+            top: 0px;
+            top: 59px;
+
+            box-shadow: rgb(46, 110, 239) 0px 7px 29px 0px;
+            
+            
+        }
+        header>img{
+            width: 80px;
+
+        }
+      
+        .navber_list{
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            
+            
+        }
+        .navber_list a{
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+            transition: color .5s;
+        }
+        .navber_list a:hover{
+            color: black;
+        }
+        #flexgrow{
+            width: 300px;
+            display: none;
+            /* border: 1px solid; */
+        }
+        #button{
+            display: flex;
+            gap: 20px;
+            padding-right: 20px;
+            /* border: 1px solid; */
+        }
+        #button>button{
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            color: rgb(11, 53, 88);
+            
+            
+        }
+        #button>button:active{
+            background-color: #d7e6fb;
+        }
+        
+        .menusection{
+            display: none;
+            z-index: 1;
+            /* background: transparent; */
+
+        }
+        .menusection>img{
+            border: 1px solid white;
+            width: 50px;
+            height: 50px;
+           
+        }
+        .menusection>img:nth-of-type(2){
+            display: none;
+            
+        }
+        @media(width<=768px){
+            .navber{
+                /* display: none; */
+                width: 100%;
+                height: 100vh;
+                /* border: 1px solid; */
+                background-color: rgb(7, 74, 207);
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: translatex(100%);
+                /* transform: translatex(50%); */
+                transition: transform .5s linear;
+            }
+            #flexgrow{
+                display: block;
+            }
+            .menusection{
+                display: block;
+            }
+            .navber_list{
+                flex-direction: column;
+                align-items: center;
+            }
+            #button>button{
+                font-size: 16px;
+            }
+            
+        }
+        #modechange{
+            background-color: rgb(7, 74, 207);
+            
+            
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+
+            display: flex;
+            justify-content: end;
+            padding: 10px 20px;
+            
+
+        }
+        #toggle{
+            width: 100px;
+            height: 50px;
+            background-color: #d7e6fb;
+            border-radius: 100px;
+        }
+
+       
+
+    </style>
+</head>
+<body>
+    <div id="modechange">
+        <label for="check" id="toggle"></label>
+        <input type="checkbox" id="check">
+        
+    </div>
+
+    <header>
+            <img src="./image/Nav-image/navber_logo.png" alt="logo" class="logo">
+        <div class="navber">
+            <ul class="navber_list">
+                <li><a href="#">Product</a></li>
+                <li><a href="#">solution</a></li>
+                <li><a href="#">Enterprise</a></li>
+                <li><a href="#">Resource</a></li>
+                <li><a href="#">About</a></li>
+
+            </ul>
+        </div>
+        <div id="flexgrow">
+
+        </div>
+        <div id="button">
+            <button id="signup">Signup</button>
+            <button id="login">Login</button></div>
+        
+        <div class="menusection">
+            
+            <img src="./image/Nav-image/white menu.svg" alt="" id="menuopen">
+            <img src="./image/Nav-image/white cancel.svg" alt="" id="menuclose">
+        </div>
+        
+    </header>
+   
+
+    
+</body>
+<script>
+    let signup=document.querySelector("#signup")
+    let login=document.querySelector("#login")
+    let navber=document.querySelector(".navber")
+    let menuopen=document.querySelector("#menuopen")
+    let menuclose=document.querySelector("#menuclose")
+    menuopen.addEventListener("click",()=>{
+        console.log("yes")
+        navber.style.transform="translatex(0%)"
+        menuopen.style.display="none"
+        menuclose.style.display="block"
+        
+    })
+    menuclose.addEventListener("click",()=>{
+        console.log("yes")
+        navber.style.transform="translatex(100%)"
+        menuopen.style.display="block"
+        menuclose.style.display="none"
+        
+    })
+
+    signup.addEventListener("click" , ()=>{
+
+window.location.href = "./pages/signup.html"
+})
+
+login.addEventListener("click" , ()=>{
+window.location.href = "./pages/login.html"
+})
+    
+
+
+
+</script>
+</html>
+
+
+<!-- <div id="signuppubyother">
+    <div>
+        <img src="../image/G logo.png" alt="">
+        <p>Login with Google</p>
+    </div>
+    <div >
+        <img src="../image/Apple-Logo-removebg-preview.png" alt="">
+        <p>Login with Apple</p>
+    </div>
+</div> -->
+
+
+<!-- #signuppubyother{
+    display: grid;
+    align-items: center;
+    gap: 10px;
+    /* border: 1px solid; */
+    grid-template-columns: repeat(2,1fr);
+    gap: 10px;
+    margin-top: 15px;
+    font-size: clamp(10px,16px,18px);
+}
+#signuppubyother>div{
+    border: 1px solid;
+    border-radius: 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 7px 10px;
+
+}
+#signuppubyother>div>img{
+    height: 80%;
+    
+}
+#signuppubyother>div:nth-of-type(1)>img{
+    margin-right: 10px;
+    
+} -->

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .booking-item {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .booking-item h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .booking-item p {
+            margin: 5px 0;
+            color: #777;
+        }
+
+        .booking-item button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .booking-item button:hover {
+            background-color: #0056b3;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Bookings</h1>
+        <div id="bookingList"></div>
+    </div>
+
+    <script>
+        let userId = '1'; // Hardcoded user id for testing
+
+        async function fetchUserData(userId) {
+            const response = await fetch(`http://localhost:3000/users/${userId}`);
+            const user = await response.json();
+            return user;
+        }
+
+        async function loadBookings() {
+            const user = await fetchUserData(userId);
+            displayBookings(user.meetingDetails);
+        }
+
+        function displayBookings(meetings) {
+            const bookingList = document.getElementById('bookingList');
+            bookingList.innerHTML = '';
+
+            meetings.forEach(meeting => {
+                const bookingItem = document.createElement('div');
+                bookingItem.className = 'booking-item';
+                bookingItem.innerHTML = `
+                    <h3>${meeting.summary}</h3>
+                    <p><strong>Start Time:</strong> ${meeting.startTime}</p>
+                    <p><strong>End Time:</strong> ${meeting.endTime}</p>
+                    <button data-id="${meeting.id}" onclick="deleteBooking(event)">Delete Booking</button>
+                    <button data-id="${meeting.id}" onclick="rescheduleBooking(event)">Reschedule</button>
+                `;
+                bookingList.appendChild(bookingItem);
+            });
+        }
+
+        async function deleteBooking(event) {
+            const bookingId = event.target.getAttribute('data-id');
+
+            // Fetch the current user data
+            const userResponse = await fetch(`http://localhost:3000/users/${userId}`);
+            const user = await userResponse.json();
+
+            // Filter out the booking from the user's meetingDetails
+            const updatedMeetings = user.meetingDetails.filter(booking => booking.id !== bookingId);
+
+            // Update the user data with the filtered meetings
+            await fetch(`http://localhost:3000/users/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ meetingDetails: updatedMeetings })
+            });
+
+            // Fetch the events data
+            const eventsResponse = await fetch('http://localhost:3000/events');
+            const events = await eventsResponse.json();
+
+            // Find and update the specific event detail
+            for (let event of events) {
+                const meetingIndex = event.meetingDetails.findIndex(detail => detail.id === bookingId);
+                if (meetingIndex !== -1) {
+                    // Update status to available
+                    event.meetingDetails[meetingIndex].status = 'available';
+
+                    // Update the event data
+                    await fetch(`http://localhost:3000/events/${event.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(event)
+                    });
+
+                    break; // Stop searching after updating the event
+                }
+            }
+
+            // Reload the bookings
+            loadBookings();
+        }
+
+        function rescheduleBooking(event) {
+            const bookingId = event.target.getAttribute('data-id');
+            // Implement reschedule functionality here
+        }
+
+        // Initial load
+        loadBookings();
+    </script>
+</body>
+</html>

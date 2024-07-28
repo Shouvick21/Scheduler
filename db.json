@@ -1,0 +1,135 @@
+{
+  "events": [
+    {
+      "id": "User2@gmail.com",
+      "meetingDetails": [
+        {
+          "id": "lyt4q495qqd2ifc1bml",
+          "startTime": "2024-07-23T17:41:00.000Z",
+          "endTime": "2024-07-23T18:42:00.000Z",
+          "summary": "sjg;a",
+          "link": "https://www.google.com/calendar/event?eid=M3RpbGM0MzJsbjFoZWo3Mmh0bXQ2M2RyNTAgaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        },
+        {
+          "id": "lyt4q495h139363goaj",
+          "startTime": "2024-07-25T19:56:00.000Z",
+          "endTime": "2024-07-25T20:57:00.000Z",
+          "summary": "task",
+          "link": "https://www.google.com/calendar/event?eid=cjBmbTUzdGdzZ2dnMDQyY3Fhc2puYXExMG8gaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        },
+        {
+          "id": "lyt4q4955f69a0ss1xo",
+          "startTime": "2024-07-25T21:40:00.000Z",
+          "endTime": "2024-07-27T18:36:00.000Z",
+          "summary": "new data",
+          "link": "https://www.google.com/calendar/event?eid=YmxxMW5qYW05OGsxOWE1M2s1bXNwM2tnY2cgaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        }
+      ]
+    },
+    {
+      "id": "i.ritikamish@gmail.com",
+      "meetingDetails": [
+        {
+          "id": "lyveq36shhllza2htpe",
+          "startTime": "2024-07-22T01:50:00.000Z",
+          "endTime": "2024-08-10T22:41:00.000Z",
+          "summary": "Masai Connect",
+          "link": "https://www.google.com/calendar/event?eid=bjNuMzY2dnFuNGcwZWcwaDBudm52bWRlYTggaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        },
+        {
+          "id": "lyveq36suejezqlnxs",
+          "startTime": "2024-07-22T01:50:00.000Z",
+          "endTime": "2024-08-10T22:41:00.000Z",
+          "summary": "Masai Connect",
+          "link": "https://www.google.com/calendar/event?eid=cGYzazdyZzR2a29yaTBtMGlsY2NwYTU5OGsgaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        },
+        {
+          "id": "lyveq36sy7p42pqvvb",
+          "startTime": "2024-07-22T12:20:00.000Z",
+          "endTime": "2024-07-22T13:22:00.000Z",
+          "summary": "Scheduler",
+          "link": "https://www.google.com/calendar/event?eid=ODJicm5rcWJvazVqYzZpaGVxaXFlOXM2aDQgaS5yaXRpa2FtaXNoQG0",
+          "status": "confirmed"
+        },
+        {
+          "id": "lyveq36sqw5naqhouab",
+          "startTime": "2024-07-22T14:10:00.000Z",
+          "endTime": "2024-07-28T14:14:00.000Z",
+          "summary": "s",
+          "link": "https://www.google.com/calendar/event?eid=YXBwbnRxODZmYXJrb2MwbnRkb2xiOW5hazQgaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        },
+        {
+          "id": "lyveq36s4hza1angbn1",
+          "startTime": "2024-07-23T21:25:00.000Z",
+          "endTime": "2024-07-25T18:21:00.000Z",
+          "summary": "task-2",
+          "link": "https://www.google.com/calendar/event?eid=bzZ1b3J2bG9ybzFodW84czVtYjh1NGQwNDAgaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        },
+        {
+          "id": "lyveq36se87qh1uxit9",
+          "startTime": "2024-07-25T21:40:00.000Z",
+          "endTime": "2024-07-27T18:36:00.000Z",
+          "summary": "new data",
+          "link": "https://www.google.com/calendar/event?eid=YmxxMW5qYW05OGsxOWE1M2s1bXNwM2tnY2cgaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        },
+        {
+          "id": "lyveq36sdno5wtbpj7o",
+          "startTime": "2024-07-27T18:23:00.000Z",
+          "endTime": "2024-07-28T18:23:00.000Z",
+          "summary": "new task",
+          "link": "https://www.google.com/calendar/event?eid=Y2U2MWw4OG00ZDNoaWJtZWxiMWczODFoanMgaS5yaXRpa2FtaXNoQG0",
+          "status": "available"
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": "0.3890061123692239",
+      "username": "Arp",
+      "useremail": "www.arpan.01@gmail.com",
+      "userpass": "123",
+      "meetingDetails": []
+    },
+    {
+      "id": "1",
+      "username": "ab",
+      "useremail": "gh@gmail.com",
+      "userpass": "321",
+      "meetingDetails": [
+        {
+          "id": "lyveq36sy7p42pqvvb",
+          "startTime": "2024-07-22T12:20:00.000Z",
+          "endTime": "2024-07-22T13:22:00.000Z",
+          "summary": "Scheduler",
+          "link": "https://www.google.com/calendar/event?eid=ODJicm5rcWJvazVqYzZpaGVxaXFlOXM2aDQgaS5yaXRpa2FtaXNoQG0",
+          "status": "confirmed"
+        }
+      ]
+    },
+    {
+      "id": "0.47074017007978175",
+      "username": "Ritika Mishra",
+      "useremail": "abcd@gmail.com",
+      "userpass": "abcd",
+      "meetingDetails": [
+        {
+          "id": "lyurqsjkw1qg5myqa8o",
+          "startTime": "2024-07-22T01:50:00.000Z",
+          "endTime": "2024-08-10T22:41:00.000Z",
+          "summary": "Masai Connect",
+          "link": "https://www.google.com/calendar/event?eid=bjNuMzY2dnFuNGcwZWcwaDBudm52bWRlYTggaS5yaXRpa2FtaXNoQG0",
+          "status": "confirmed"
+        }
+      ]
+    }
+  ]
+}

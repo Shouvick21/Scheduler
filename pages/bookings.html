@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings Dashboard</title>
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        header{
+            margin-bottom: 5% !important;
+        }
+        /* Reset default margin and padding, set background color */
+        body {
+            font-family: sans-serif;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-transform: capitalize;
+        }
+
+        /* Container for the dashboard */
+        .container {
+            background-color: #fff;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        position:absolute;
+        top: 150px;
+        }
+
+        /* Title styling */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Individual booking item */
+        .booking-item {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+
+            button:nth-of-type(2){
+                background-color: #759bcd;
+            }
+            button:nth-of-type(2):hover{
+                background-color: #759bcd;
+                cursor:auto;
+            }
+        }
+
+        /* Heading for each booking */
+        .booking-item h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #3e3c3c;
+        }
+
+        /* Paragraph styling for booking details */
+        .booking-item p {
+            margin: 5px 0;
+            color: #413b3bd7;
+        }
+
+        /* Buttons within booking item */
+        .booking-item button {
+            padding: 8px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            background-color: #2175cf;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .booking-item button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Modal styles (hidden by default) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    
+
+    <header>
+        <img src="../image/Nav-image/navber_logo.png" alt="logo" class="logo">
+    <div class="navber">
+        <ul class="navber_list">
+            <!-- <li><a id="home">Home</a></li>
+            <li><a id="slotsPage">Slots Availability</a></li>
+
+            <li>
+            </li> -->
+
+        </ul>
+    </div>
+    <div id="flexgrow">
+ 
+    </div>
+    <div id="button">
+        <button id="home">Home</button>
+        <button id="slotsPage">Slots Availability</button>
+        <button class="btn-login" id="logout_button login" onclick="handleSignOut()">Log
+            Out</button>
+        <div id="admin">
+            <img style="border-radius: 50%;height: 40px; cursor: pointer; " src="../Equality-Experts_024/image/Nav-image/5315311-middle.png" alt="">
+           
+        </div>
+    </div>
+    <!-- <div class="menusection">
+        
+        <img src="../image/Nav-image/white menu.svg" alt="" id="menuopen">
+        <img src="../image/Nav-image/white cancel.svg" alt="" id="menuclose">
+    </div> -->
+
+    
+</header>
+    <div class="container">
+        <h1>Your Bookings</h1>
+        <div id="bookingList"></div>
+    </div>
+
+    <script>
+        let slotsPage = document.querySelector("#slotsPage")
+        let home = document.querySelector("#home")
+        let btnlogin = document.querySelector(".btn-login")
+        let redirectHome = () => {
+
+        }
+        btnlogin.addEventListener("click", redirectHome)
+        home.addEventListener("click", () => {
+            // localStorage.removeItem("loggedUser")
+            window.location.href = "../index.html"
+        })
+
+
+        slotsPage.addEventListener("click", () => {
+            window.location.href = "./user.html"
+        })
+
+        let userId = '1'; // Hardcoded user id for testing
+
+        async function fetchUserData(userId) {
+            const response = await fetch(`https://mock-api-server-ls06.onrender.com/users/${userId}`);
+            const user = await response.json();
+            return user;
+        }
+
+        async function loadBookings() {
+            const user = await fetchUserData(userId);
+            displayBookings(user.meetingDetails);
+        }
+
+        function displayBookings(meetings) {
+            const bookingList = document.getElementById('bookingList');
+            bookingList.innerHTML = '';
+
+            meetings.forEach(meeting => {
+                const bookingItem = document.createElement('div');
+                bookingItem.className = 'booking-item';
+                bookingItem.innerHTML = `
+                    <h3>${meeting.summary}</h3>
+                    <p><strong>Start Time:</strong> ${meeting.startTime}</p>
+                    <p><strong>End Time:</strong> ${meeting.endTime}</p>
+                    <button data-id="${meeting.id}" onclick="deleteBooking(event)">Delete Booking</button>
+                    <button data-id="${meeting.id}" onclick="rescheduleBooking(event)">Reschedule</button>
+                `;
+                bookingList.appendChild(bookingItem);
+            });
+        }
+
+        async function deleteBooking(event) {
+            const bookingId = event.target.getAttribute('data-id');
+
+            // Fetch the current user data
+            const userResponse = await fetch(`https://mock-api-server-ls06.onrender.com/users/${userId}`);
+            const user = await userResponse.json();
+
+            // Filter out the booking from the user's meetingDetails
+            const updatedMeetings = user.meetingDetails.filter(booking => booking.id !== bookingId);
+
+            // Update the user data with the filtered meetings
+            await fetch(`https://mock-api-server-ls06.onrender.com/users/${userId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ meetingDetails: updatedMeetings })
+            });
+
+            // Fetch the events data
+            const eventsResponse = await fetch('https://mock-api-server-ls06.onrender.com/events');
+            const events = await eventsResponse.json();
+
+            // Find and update the specific event detail
+            for (let event of events) {
+                const meetingIndex = event.meetingDetails.findIndex(detail => detail.id === bookingId);
+                if (meetingIndex !== -1) {
+                    // Update status to available
+                    event.meetingDetails[meetingIndex].status = 'available';
+
+                    // Update the event data
+                    await fetch(`https://mock-api-server-ls06.onrender.com/events/${event.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(event)
+                    });
+
+                    break; // Stop searching after updating the event
+                }
+            }
+
+            // Reload the bookings
+            loadBookings();
+        }
+
+        function rescheduleBooking(event) {
+            const bookingId = event.target.getAttribute('data-id');
+        }
+
+        loadBookings();
+    </script>
+
+    <script type="module" src="../script.js"></script>
+</body>
+
+</html>
