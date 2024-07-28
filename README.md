@@ -1,5 +1,3 @@
-# Equality-Experts_024
-
 
 # Scheduler App
 
